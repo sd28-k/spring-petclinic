@@ -15,7 +15,7 @@ pipeline {
   }    
   agent {
     kubernetes {
-      label "spring-petclinic-${myid}"
+      label "petclinic-demo-${myid}"
       instanceCap 1
       defaultContainer 'jnlp'
       yaml """
@@ -102,10 +102,10 @@ spec:
         stage('Static Code Analysis') {
           steps {
             container('maven') {
-              withSonarQubeEnv('My SonarQube') { 
+              withSonarQubeEnv('Demo SonarQube') { 
                 sh """
                 mvn sonar:sonar \
-                  -Dsonar.projectKey=spring-petclinic \
+                  -Dsonar.projectKey=petclinic-demo \
                   -Dsonar.host.url=${env.SONAR_HOST_URL} \
                   -Dsonar.login=${env.SONAR_AUTH_TOKEN}
                 """
