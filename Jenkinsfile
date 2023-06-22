@@ -102,10 +102,10 @@ spec:
         stage('Static Code Analysis') {
           steps {
             container('maven') {
-              withSonarQubeEnv('Demo SonarQube') { 
+              withSonarQubeEnv('Demo Sonar') { 
                 sh """
                 mvn sonar:sonar \
-                  -Dsonar.projectKey=demo \
+                  -Dsonar.projectKey=rancher-demo \
                   -Dsonar.host.url=${env.SONAR_HOST_URL} \
                   -Dsonar.login=${env.SONAR_AUTH_TOKEN}
                 """
