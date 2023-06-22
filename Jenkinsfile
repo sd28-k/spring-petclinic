@@ -105,7 +105,7 @@ spec:
               withSonarQubeEnv('Demo SonarQube') { 
                 sh """
                 mvn sonar:sonar \
-                  -Dsonar.projectKey=petclinic-demo \
+                  -Dsonar.projectKey=demo \
                   -Dsonar.host.url=${env.SONAR_HOST_URL} \
                   -Dsonar.login=${env.SONAR_AUTH_TOKEN}
                 """
