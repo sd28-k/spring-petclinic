@@ -127,15 +127,20 @@ spec:
       parallel {
         stage(' Anchore Scan') {
           steps {
-            writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-	    anchore name: 'anchore_images'
+            echo "Skipping for now"
+            //writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
+	    //anchore name: 'anchore_images'
           } 
         }
         stage('Neuvector') {
           steps {
-            writeFile file: 'neuvector_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-	    neuvector name: 'neuvector_images_images'
-          }
+	    neuvector nameOfVulnerabilityToExemptFour: '',
+            numberOfHighSeverityToFail: '400', 
+	    numberOfMediumSeverityToFail: '400',
+	    registrySelection: 'harbor', 
+	    repository: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}", 
+	    scanLayers: true
+	  }  
         }  
       }
     }
