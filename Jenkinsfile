@@ -135,6 +135,13 @@ spec:
         stage('Neuvector') {
           steps {
 	    neuvector nameOfVulnerabilityToExemptFour: '',
+            nameOfVulnerabilityToExemptOne: '', 
+	    nameOfVulnerabilityToExemptThree: '', 
+	    nameOfVulnerabilityToExemptTwo: '', 
+	    nameOfVulnerabilityToFailFour: '', 
+	    nameOfVulnerabilityToFailOne: '', 
+	    nameOfVulnerabilityToFailThree: '', 
+	    nameOfVulnerabilityToFailTwo: '',
             numberOfHighSeverityToFail: '400', 
 	    numberOfMediumSeverityToFail: '400',
 	    registrySelection: 'harbor', 
