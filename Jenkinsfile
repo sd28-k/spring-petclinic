@@ -128,13 +128,13 @@ spec:
         stage(' Anchore Scan') {
           steps {
             writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-			      anchore name: 'anchore_images'
+	    anchore name: 'anchore_images'
           } 
         }
         stage('Neuvector') {
           steps {
             writeFile file: 'neuvector_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-			      neuvector name: 'neuvector_images_images'
+	    neuvector name: 'neuvector_images_images'
           }
         }  
       }
