@@ -101,7 +101,7 @@ spec:
         }
         stage('Static Code Analysis') {
           steps {
-            echo "Skipping the stage for now..."
+            //echo "Skipping the stage for now..."
             container('maven') {
               withSonarQubeEnv('Demo SonarQube') { 
                 sh """
@@ -125,11 +125,28 @@ spec:
       }
     }
     stage('Image Vulnerability Scan') {
-      steps {
-        writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-        anchore name: 'anchore_images'
+      parallel {
+        stage('Anchore Image Scanning') {
+	        steps {
+            writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
+            anchore name: 'anchore_images'
+          }
+	      }
+	      stage('Neuvector Image Scanning') {
+          steps {
+            neuvector registrySelection: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}", 
+            scanLayers: true,
+            repository: '${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}'
+          }
+        }
       }
     }
+    //stage('Image Vulnerability Scan') {
+      //steps {
+        //writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
+        //anchore name: 'anchore_images'
+      //}
+    //}
     stage('Approval') {
       input {
         message "Proceed to deploy?"
