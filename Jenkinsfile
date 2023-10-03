@@ -137,7 +137,8 @@ spec:
           steps {
             neuvector registrySelection: 'harbor', 
             scanLayers: true,
-            repository: '${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}'
+            repository: '${env.HARBOR_URL}/library/demo/spring-petclinic'
+            tag: 'v1.0.${env.BUILD_ID}'
           }
         }
       }
