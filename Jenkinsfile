@@ -128,8 +128,9 @@ spec:
       parallel {
         stage('Anchore Image Scanning') {
 	  steps {
-            writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-            anchore name: 'anchore_images'
+            echo 'Skipping for now'
+            //writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
+            //anchore name: 'anchore_images'
           }
 	}
 	stage('Neuvector Image Scanning') {
