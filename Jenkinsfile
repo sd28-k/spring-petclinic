@@ -125,30 +125,11 @@ spec:
       }
     }
     stage('Image Vulnerability Scan') {
-      parallel {
-        stage('Anchore Image Scanning') {
-	  steps {
-            echo 'Skipping for now'
-            //writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-            //anchore name: 'anchore_images'
-          }
-	}
-	stage('Neuvector Image Scanning') {
-          steps {
-            neuvector registrySelection: 'harbor', 
-            scanLayers: true,
-            repository: '${env.HARBOR_URL}/library/demo/spring-petclinic',
-            tag: 'v1.0.${env.BUILD_ID}'
-          }
-        }
+      steps {
+        writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
+        anchore name: 'anchore_images'
       }
     }
-    //stage('Image Vulnerability Scan') {
-      //steps {
-        //writeFile file: 'anchore_images', text: "${env.HARBOR_URL}/library/demo/spring-petclinic:v1.0.${env.BUILD_ID}"
-        //anchore name: 'anchore_images'
-      //}
-    //}
     stage('Approval') {
       input {
         message "Proceed to deploy?"
